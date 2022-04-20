@@ -1,4 +1,5 @@
 export const SIGN_IN = 'SIGN_IN'
 export const SIGN_UP = 'SIGN_UP'
 export const LOGOUT = 'LOGOUT'
-export const DELETE='DELETE'
+export const DELETE = 'DELETE'
+export const FETCH_DATA='FETCH_DATA'

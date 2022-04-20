@@ -1,4 +1,5 @@
-import {connect} 
+// import { connect } from "react-redux"
+
 const SignIn = () => {
 
     return (
@@ -25,5 +26,11 @@ const SignIn = () => {
 
         </>
     )
+}
+const mapStateToProps=(state)=>{
+    
+}
+const mapDispatchToProps=(dispatch)=>{
+
 }
 export default SignIn
