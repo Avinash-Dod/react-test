@@ -1,6 +1,9 @@
-import { NavLink } from "react-router-dom"
-// import './header.css'
+import { logout } from "../../Redux/actions/action"
+import { useDispatch } from "react-redux"
+import { useNavigate } from "react-router"
 const Header = () => {
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
     return (
         <>
 
@@ -9,13 +12,17 @@ const Header = () => {
                     <img src="https://bytecipher.net/wp-content/uploads/2019/11/logo-new.png" alt="logo"></img>
                     Test Project</a>
                 <div className="header-right">
-                    <a className="" href="/">Logout</a>
-                    
-                    
+                    <button type="button" onClick={() => {
+                        dispatch(logout())
+                        navigate("/")
+                    }}>Logout</button>
+
                 </div>
             </div>
         </>
 
     )
 }
-export default Header
+
+
+export default Header 

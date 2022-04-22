@@ -97,23 +97,45 @@
     border: solid 1px black;
   }
   .container {
-    margin-left: 12%;
+    margin-left: 15%;
     text-align: left;
     width: 70%;
   }
+  .container h2{
+    margin-left: 3%;
+  }
   .Table {
-    width: 100%;
+    text-align: center;
+    margin-right: 0%;
+      margin-left: 15%;
+    width: 80%;
+    margin-left: 12%;
     height: auto;
     position: relative;
     scroll-behavior: smooth;
+    
   }
   .Table table {
     overflow: hidden;
+    text-align: center;
+    margin-left: 10%;
     border-collapse: collapse;
     height: 100px;
-    width: 85%;
+    width: 100%;
     scroll-behavior: smooth;
   }
+  .Table table {
+      border-spacing: 0;
+    border: 1px solid #ddd;
+  }
+  
+  th, td {
+    text-align: center;
+    padding: 8px;
+  }
+  
+  tr:nth-child(even){background-color: #f2f2f2}
+  
   .center {
     text-align: center;
   }
@@ -153,6 +175,7 @@
   }
   .sidebar {
     margin: auto;
+    margin-right: 5px;
     padding: 0;
     width: 200px;
     background-color: #f1f1f1;
@@ -205,6 +228,7 @@
       float: none;
     }
   }
+  
   .header {
     overflow: hidden;
     background-color: #f1f1f1;

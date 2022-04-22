@@ -1,22 +1,32 @@
 import axios from "axios";
-import { FETCH_DATA, SIGN_IN, SIGN_UP } from "../constants";
- 
-var config = {
-  method: 'get',
-  url: 'https://reqres.in/api/users/',
-  headers: { }
-};
-
-
+import { CHANGE_DATA, FETCH_DATA, LOGOUT } from "../constants";
 export const fetchData = () => {
-
-  return (dispatch) => {
-      return axios(config)
-          .then(response => response.data)
-          .then(response => dispatch(
-              { type: FETCH_DATA, payload:response}))
-          .catch(err => dispatch(
-              console.log(err)))
+  return async (dispatch) => {
+    var get = {
+      method: 'get',
+      url: 'https://reqres.in/api/users/',
+      headers: {}
+    };
+    try {
+      const response = await axios(get);
+      const response_1 = response.data;
+      return dispatch(
+        { type: FETCH_DATA, payload: response_1 });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+}
+export const pageContent=(data)=>{
+return{
+  type:CHANGE_DATA,
+  data:data
+}
+}
+export const logout = () => {
+  return {
+    type: LOGOUT
   }
 
 }
+

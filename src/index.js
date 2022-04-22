@@ -8,10 +8,10 @@ import thunk from 'redux-thunk';
 import { applyMiddleware, legacy_createStore as createStore } from 'redux';
 import rootReducer from './Redux/reducers/index'
 import { Provider } from 'react-redux';
-import { fetchData } from './Redux/actions/action';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const store=createStore(rootReducer,applyMiddleware(thunk))
-store.dispatch(fetchData());
+ 
 root.render(
   <React.StrictMode>
     <Provider store={store}><Router><App /></Router></Provider>
