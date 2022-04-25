@@ -34,6 +34,7 @@ export const FetchReducer = (state = initState, action) => {
                 //     ...state,
                 //     userList:action.payload,
                 // }
+                break
                 
         default:
             return state
