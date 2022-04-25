@@ -283,3 +283,8 @@
     margin-right: 10px;
     float: left;
 }
+.error-message{
+  color: red;
+  text-shadow: #666 ;
+  font-weight: 200px;
+}

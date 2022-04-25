@@ -1,5 +1,5 @@
 import axios from "axios";
-import { CHANGE_DATA, FETCH_DATA, LOGOUT } from "../constants";
+import { CHANGE_DATA, DELETE, FETCH_DATA, LOGOUT } from "../constants";
 export const fetchData = () => {
   return async (dispatch) => {
     var get = {
@@ -17,11 +17,19 @@ export const fetchData = () => {
     }
   }
 }
-export const pageContent=(data)=>{
-return{
-  type:CHANGE_DATA,
-  data:data
+export const pageContent = (data) => {
+  return {
+    type: CHANGE_DATA,
+    data: data
+  }
 }
+export const Del = (data) => {
+  let items= data
+  console.log(items);
+  // return{
+  //   type:DELETE,
+  //   data
+  // }
 }
 export const logout = () => {
   return {

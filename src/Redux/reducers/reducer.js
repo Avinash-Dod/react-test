@@ -1,5 +1,5 @@
 
-import { CHANGE_DATA, FETCH_DATA, LOGOUT, SIGN_IN } from '../constants'
+import { CHANGE_DATA, DELETE, FETCH_DATA, LOGOUT, SIGN_IN } from '../constants'
 const initState = {
     userList: '',
     perPage: 0,
@@ -28,6 +28,13 @@ export const FetchReducer = (state = initState, action) => {
                     page:action.data.page
         
                 }
+                case DELETE:
+                console.log(action.payload);
+                // return{
+                //     ...state,
+                //     userList:action.payload,
+                // }
+                
         default:
             return state
     }
@@ -40,7 +47,7 @@ export const UserReducer = (userstate = initState.isAuth, action) => {
             return{                
                 userstate:true
             }
-
+            
         case LOGOUT:
             localStorage.removeItem('token')
               return {

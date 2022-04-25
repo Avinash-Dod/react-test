@@ -13,8 +13,11 @@ const Header = () => {
                     Test Project</a>
                 <div className="header-right">
                     <button type="button" onClick={() => {
-                        dispatch(logout())
-                        navigate("/")
+
+                        if (window.confirm("want to logout?") === true) {
+                            dispatch(logout())
+                            navigate("/")
+                        }
                     }}>Logout</button>
 
                 </div>
