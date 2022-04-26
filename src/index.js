@@ -13,7 +13,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 const store=createStore(rootReducer,applyMiddleware(thunk))
 root.render(
   <React.StrictMode>
-    <Provider store={store}><Router><App /></Router></Provider>
+   <Router> <Provider store={store}><App /></Provider></Router>
   </React.StrictMode>
 );
 // If you want to start measuring performance in your app, pass a function

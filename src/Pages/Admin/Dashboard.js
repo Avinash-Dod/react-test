@@ -2,11 +2,12 @@ import Header from "../../components/Header/Header"
 import { useNavigate } from "react-router"
 import { useDispatch, useSelector } from "react-redux"
 import ReactPaginate from "react-paginate"
-import { pageContent, Del } from "../../Redux/actions/action"
+import { pageContent,Remove} from "../../Redux/actions/action"
 const Dashboard = () => {
     const dispatch = useDispatch()
     let data = useSelector(state => state.UserReducer)
     let Users = useSelector(state => state.FetchReducer.userList)
+    // console.log(Users);
     const Pages = useSelector(state => state.FetchReducer)
     // console.log("this is page ",Pages); 
     let pap
@@ -16,25 +17,13 @@ const Dashboard = () => {
             `https://reqres.in/api/users/?page=${currentPage}&_limit=${limit}`
         );
         data = await res.json();
-        pap = data
+        pap = data.data
+        // console.log("pap : ",pap);
         return dispatch(pageContent(pap))
     };
 
-    const Dell = async (id) => {
-        let payload =await  Users.data
-                // if (window.confirm("want to Delete?") === true) {
-                    payload= await payload.filter(item=>item.id!==id)
-            //  return dispatch(Del(payload))
-            let fData =payload.map(item=>item)
-            return dispatch(Del(fData))
-            
-        // }
-
-     
-        
 
 
-    }
     const handlePageClick = async (data) => {
         // console.log(data.selected);
         let currentPage = data.selected + 1;
@@ -43,8 +32,16 @@ const Dashboard = () => {
 
     };
 
-    // console.log(Users);
-    // console.log(data);
+    const Dell = async (id) => {
+        // console.log(id);
+        // console.log(typeof (id));
+        let userId=id
+        if (window.confirm("Are you sure to delete?") === true) {
+        return dispatch(Remove(userId))
+        }
+    }
+
+
     const navigate = useNavigate()
     if (data === false) {
         navigate("/")
@@ -73,9 +70,9 @@ const Dashboard = () => {
                                 </tr>
                             </thead>
 
-                            {Users.data.length ?
+                            {Users.length ?
                                 (
-                                    Users.data.map(user => {
+                                    Users.map(user => {
                                         return (
                                             <tbody key={user.id}>
                                                 <tr >
@@ -84,7 +81,7 @@ const Dashboard = () => {
                                                     <td>{user.first_name}</td>
                                                     <td>{user.last_name}</td>
                                                     <td>{user.email}</td>
-                                                    <td><button type="button" onClick={() => Dell(user.id)} >Delete</button></td>
+                                                    <td><button type="button" onClick={()=>Dell(user.id)} >Delete</button></td>
 
                                                 </tr>
                                             </tbody>

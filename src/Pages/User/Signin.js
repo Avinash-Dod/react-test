@@ -6,7 +6,6 @@ const SignIn = () => {
     const initialValues = { email: '', password: '' };
     const [formValues, setFormValues] = useState(initialValues);
     const [formErrors, setFormErrors] = useState({});
-    const [isSubmit, setIsSubmit] = useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch()
     const errors = {};
@@ -22,9 +21,9 @@ const SignIn = () => {
 
 
     useEffect(() => {
-        console.log(formErrors);
-        if (Object.keys(formErrors).length === 0 && isSubmit) {
-            console.log(formValues);
+        // console.log(formErrors);
+        if (Object.keys(formErrors).length === 0) {
+            // console.log(formValues);
         }
     }, [formErrors]);
     const validate = (values) => {
@@ -50,40 +49,39 @@ const SignIn = () => {
 
     function onSubmitHandler(event) {
         event.preventDefault();
-        console.log(isSubmit);
-
         setFormErrors(validate(formValues));
-        if (errors.length === 0) {
-            setIsSubmit(true);
+        if (Object.values(errors).length !== 0) {
+            return
         }
+        else {
 
+            var axios = require('axios');
+            var data = JSON.stringify(userData);
+            var config = {
+                method: 'post',
+                url: 'https://reqres.in/api/login',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('Token'),
+                },
+                data: data
+            };
 
-        var axios = require('axios');
-        var data = JSON.stringify(userData);
-        var config = {
-            method: 'post',
-            url: 'https://reqres.in/api/login',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + localStorage.getItem('Token'),
-            },
-            data: data
-        };
+            axios(config)
+                .then(function (response) {
+                    if (response.status === 200) {
+                        localStorage.setItem('token', Object.values(response.data))
+                        dispatch({ type: SIGN_IN })
+                        navigate("/dashboard")
+                    }
+                    else if (response.status === 400)
+                        alert("User not found")
 
-        axios(config)
-            .then(function (response) {
-                if (response.status === 200) {
-                    localStorage.setItem('token', Object.values(response.data))
-                    dispatch({ type: SIGN_IN })
-                    navigate("/dashboard")
-                }
-                else if (response.status === 400)
-                    alert("User not found")
-                
-            })
-            .catch(function (error) {
-                alert("Incorrect Email or Password")
-            });
+                })
+                .catch(function (error) {
+                    alert("Incorrect Email or Password")
+                });
+        }
 
     };
 

@@ -11,31 +11,35 @@ const initState = {
 export const FetchReducer = (state = initState, action) => {
     switch (action.type) {
         case FETCH_DATA:
-            // console.log(action.payload);
+            // console.log(action.payload.data);
             // break
             return {
-                userList: action.payload,
+                userList: action.payload.data,
                 perPage: action.payload.per_page,
                 page: action.payload.page,
                 pages: action.payload.total_pages,
                 total_data: action.payload.total,
             }
-            
-            case CHANGE_DATA:
-                return {
-                    ...state,
-                    userList:action.data,
-                    page:action.data.page
-        
-                }
-                case DELETE:
-                console.log(action.payload);
-                // return{
-                //     ...state,
-                //     userList:action.payload,
-                // }
-                break
-                
+
+
+        case CHANGE_DATA:
+            return {
+                ...state,
+                userList: action.data,
+                page: action.data.page
+
+            }
+        case DELETE:
+            // console.log(action.payload);
+            let Items = state.userList.filter(item => item.id !== action.payload)
+            //   console.log(Items);
+            // console.log(typeof (Items));
+            return {
+                ...state,
+                userList: Items,
+            }
+
+
         default:
             return state
     }
@@ -45,13 +49,13 @@ export const UserReducer = (userstate = initState.isAuth, action) => {
 
     switch (action.type) {
         case SIGN_IN:
-            return{                
-                userstate:true
+            return {
+                userstate: true
             }
-            
+
         case LOGOUT:
             localStorage.removeItem('token')
-              return {
+            return {
                 ...userstate,
                 userstate: false
             }

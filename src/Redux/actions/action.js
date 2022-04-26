@@ -23,22 +23,17 @@ export const pageContent = (data) => {
     data: data
   }
 }
-export const Del = (data) => {
-  let items= data
-  console.log(items);
-  // return{
-  //   type:DELETE,
-  //   data
-  // }
-}
-// export async function Del(dispatch, getState) {
-//   const response = await client.get('/fakeApi/todos')
-//   dispatch({ type: 'todos/todosLoaded', payload: response.todos })
-// }
+
 export const logout = () => {
   return {
     type: LOGOUT
   }
 
+}
+export const Remove =(id)=>{
+  return{
+    type:DELETE,
+    payload:id
+  }
 }
 
