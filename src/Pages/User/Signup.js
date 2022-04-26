@@ -1,40 +1,88 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router";
 // import './style.css'
 
 const SignUp = () => {
-    const [username, setUsername] = useState('')
-    const [password, setPassword] = useState('')
+    const initialValues = { email: '', password: '' };
+    const [formValues, setFormValues] = useState(initialValues);
+    const [formErrors, setFormErrors] = useState({});
+    // const navigate = useNavigate();
+    // const dispatch = useDispatch()
+    const errors = {};
+    const userData = {
+        email: formValues.email,
+        password: formValues.password
+    };
 
-    const userdata = {
-        username: username,
-        password: password
-    }
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormValues({ ...formValues, [name]: value });
+    };
+    useEffect(() => {
+        // console.log(formErrors);
+        if (Object.keys(formErrors).length === 0) {
+            // console.log(formValues);
+        }
+    }, [formErrors]);
+    const validate = (values) => {
 
-    const onSubmitHandler = (event) => {
-        event.preventDefault()
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+        if (!values.email) {
+            errors.email = "Email is required!";
+        } else if (!regex.test(values.email)) {
+            errors.email = "This is not a valid email format!";
+        }
+        if (!values.password) {
+            errors.password = "Password is required!";
+        } else if (values.password.length < 6) {
+            errors.password = "Password must be more than 6 characters";
+        } else if (values.password.length > 10) {
+            errors.password = "Password cannot exceed more than 10 characters";
+        }
 
-        var axios = require('axios');
-        var data = JSON.stringify(userdata);
-        var config = {
-            method: 'post',
-            url: 'https://reqres.in/api/register',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            data: data
-        };
+        return errors;
+    };
 
-        axios(config)
+
+
+    function onSubmitHandler(event) {
+        event.preventDefault();
+        setFormErrors(validate(formValues));
+        if (Object.values(errors).length !== 0) {
+            return
+        }
+        else {
+
+            var axios = require('axios');
+            var data = JSON.stringify(userData);
+            var config = {
+                method: 'post',
+                url: 'https://reqres.in/api/login',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('Token'),
+                },
+                data: data
+
+            };
+            axios(config)
             .then(function (response) {
                 console.log(JSON.stringify(response.data));
+                alert("Registered Successfully")
             })
             .catch(function (error) {
                 console.log(error);
+                alert("Invalid Email")
             });
 
 
+            };
+    
+          
 
-    }
+    };
+   
     return (
         <>
             <div className="container-left">
@@ -45,14 +93,24 @@ const SignUp = () => {
                 </div>
             </div>
             <div className="Signup_form">
-
+  {/* {Object.keys(formErrors).length === 0  ? (
+                    <div className="ui message success">Signed in successfully</div>
+                ) : (
+                    <pre>{JSON.stringify(formValues, 2)}</pre>
+                )}  */}
 
                 <form action="" onSubmit={onSubmitHandler}>
                     <img className="Signup_form_img" src="https://th.bing.com/th/id/OIP.Kf-A4bhyw6NFAggbsk3cdwHaIU?w=136&h=180&c=7&r=0&o=5&dpr=1.18&pid=1.7" alt="user-reg" />
-                    <label for="fname">First name:</label><br></br>
-                    <input required type="text" id="fname" name="fname" onChange={(e) => { setUsername(e.target.value) }} value={username} /><br></br>
-                    <label for="lname">Last name:</label><br></br>
-                    <input required  type="password" id="lname" name="lname" onChange={(e) => { setPassword(e.target.value) }} value={password} /><br></br>
+                    <label htmlFor="email">First name:</label><br></br>
+                    <input  type="text" name="email"placeholder="Email"
+                        value={formValues.email}
+                        onChange={handleChange} /><br></br>
+                    <p className='error-message'>{formErrors.email}</p>
+                    <label htmlFor="lname">Last name:</label><br></br>
+                    <input  type="password"  name="password" placeholder="Password"
+                        value={formValues.password}
+                        onChange={handleChange} /><br></br>
+                    <p className='error-message' >{formErrors.password}</p>
                     <button type="submit"  >SignUp</button>
                     <a href="/"><button type="button"  >SignIn</button></a>
                 </form>
@@ -62,4 +120,5 @@ const SignUp = () => {
         </>
     )
 }
+
 export default SignUp

@@ -3,15 +3,14 @@ import { Route, Routes } from "react-router-dom"
 import Dashboard from "../Pages/Admin/Dashboard"
 import SignIn from "../Pages/User/Signin"
 import SignUp from "../Pages/User/Signup"
+const Navigation = () => {
 
-const Navigation=()=>{
-
-    return(
+    return (
 
         <Routes>
             <Route path="/" element={<SignIn />} />
-                <Route path="signup" element={<SignUp />} />
-                <Route path="dashboard" element={<Dashboard />} />
+            <Route path="signup" element={<SignUp />} />
+            <Route path="dashboard" element={<Dashboard />} />
 
         </Routes>
     )

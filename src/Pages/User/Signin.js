@@ -18,8 +18,6 @@ const SignIn = () => {
         const { name, value } = e.target;
         setFormValues({ ...formValues, [name]: value });
     };
-
-
     useEffect(() => {
         // console.log(formErrors);
         if (Object.keys(formErrors).length === 0) {
@@ -113,7 +111,7 @@ const SignIn = () => {
                     <input type="password" name="password" placeholder="Password"
                         value={formValues.password}
                         onChange={handleChange} /><br></br>
-                    <p className='error-message' >{formErrors.password}</p><b></b>
+                    <p className='error-message' >{formErrors.password}</p>
                     <p className='error-message' >{formErrors.message}</p>
                     <a href="/signup"><button type="button"  >SignUp</button></a>
 
